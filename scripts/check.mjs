@@ -1,0 +1,10 @@
+import { readFile } from 'node:fs/promises';
+const manifest = JSON.parse(await readFile('manifest.json', 'utf8'));
+if (manifest.manifestVersion !== 5 || manifest.host?.app !== 'premierepro' || manifest.host?.minVersion !== '25.6.0') throw new Error('Manifest must target Premiere UXP 25.6+');
+if (manifest.requiredPermissions?.network?.domains?.join() !== 'https://api.typesafe.ai') throw new Error('Network allowlist drifted');
+const source = await readFile('src/premiere.js', 'utf8');
+for (const token of ['lockedAccess', 'executeTransaction', 'compoundAction.addAction', 'createAddMarkerAction']) if (!source.includes(token)) throw new Error(`Premiere action guard missing: ${token}`);
+const bundle = await readFile('dist/main.js', 'utf8');
+if (!bundle.includes('jev-1.13.0')) throw new Error('Pinned model missing from bundle');
+console.log('manifest, action scoping, network allowlist, and bundle: ok');
+

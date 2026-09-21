@@ -1,0 +1,19 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><link rel="stylesheet" href="style.css"></head>
+<body>
+  <main>
+    <h1>Jev review markers</h1>
+    <p class="lede">Paste an SRT, find the strongest declared issues, then add exact-caption markers to the active sequence.</p>
+    <label>TypeSafe API key <input id="key" type="password" autocomplete="off" placeholder="Not stored"></label>
+    <label>Review pack
+      <select id="pack"><option value="editorial">Editorial pass</option><option value="risk">Claims &amp; risk</option></select>
+    </label>
+    <label>SRT captions <textarea id="srt" rows="14" placeholder="1&#10;00:00:03,000 --> 00:00:06,000&#10;Caption text"></textarea></label>
+    <div class="actions"><button id="review">Review</button><button id="apply" disabled>Add markers</button></div>
+    <p id="status" role="status">No review yet.</p>
+    <section id="results"></section>
+    <details><summary>Privacy &amp; boundary</summary><p>Caption text is sent to Jev only when you click Review. The key stays in memory. Jev selects typed outcomes and existing caption IDs; it does not write editorial feedback.</p></details>
+  </main>
+  <script src="dist/main.js"></script>
+</body></html>
+

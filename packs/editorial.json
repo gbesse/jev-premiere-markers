@@ -1,0 +1,2 @@
+{"id":"editorial","title":"Editorial pass","issues":[{"id":"unclear","label":"Unclear line","instructions":"Is any caption hard to understand without context or on a first read?","markAbove":0.62},{"id":"awkward","label":"Awkward delivery","instructions":"Does any caption contain phrasing likely to feel awkward, unnatural, or difficult to deliver aloud?","markAbove":0.65},{"id":"redundant","label":"Redundant beat","instructions":"Does any caption repeat a point already made without adding meaningful information?","markAbove":0.7}]}
+
