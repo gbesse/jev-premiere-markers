@@ -1,6 +1,6 @@
 {
   "name": "jev-premiere-markers",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Turn typed Jev review findings into exact, undoable Premiere timeline markers.",
   "type": "module",
   "scripts": {
@@ -8,7 +8,8 @@
     "check": "npm run lint && npm run build && node scripts/check.mjs",
     "lint": "eslint src",
     "test": "node --test",
-    "demo": "node scripts/demo.mjs"
+    "demo": "node scripts/demo.mjs",
+    "demo:guard": "node scripts/guard-demo.mjs"
   },
   "engines": { "node": ">=22" },
   "license": "MIT",
