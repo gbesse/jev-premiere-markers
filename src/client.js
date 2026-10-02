@@ -4,11 +4,13 @@ export async function callJev(request, { apiKey, fetchImpl = fetch, timeoutMs = 
   if (!apiKey?.trim()) throw new TypeError('Enter a TypeSafe API key');
   if (request.model !== MODEL) throw new TypeError('Model must remain pinned');
   for (let attempt = 0; ; attempt++) {
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), timeoutMs);
     try {
       const response = await fetchImpl('https://api.typesafe.ai/v1/systemone', {
         method: 'POST', redirect: 'error',
         headers: { authorization: `Bearer ${apiKey}`, 'content-type': 'application/json' },
-        body: JSON.stringify(request), signal: AbortSignal.timeout(timeoutMs)
+        body: JSON.stringify(request), signal: controller.signal
       });
       if ([429, 529].includes(response.status) && attempt < retries) {
         await new Promise(resolve => setTimeout(resolve, 250 * 2 ** attempt));
@@ -22,7 +24,8 @@ export async function callJev(request, { apiKey, fetchImpl = fetch, timeoutMs = 
         continue;
       }
       throw error;
+    } finally {
+      clearTimeout(timeout);
     }
   }
 }
-
