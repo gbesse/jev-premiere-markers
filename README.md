@@ -17,6 +17,10 @@ npm run demo
 
 Load this repository's `manifest.json` in UXP Developer Tool after `npm run build`, then open **Window → UXP Plugins → Jev Review Markers** in Premiere.
 
+## Try the caption-ID guard offline
+
+`npm run demo:guard` parses a short synthetic SRT, builds finite caption choices and rejects a fabricated `caption_99` response before any marker plan can be created. It uses no API key or Premiere session. The host-specific marker transaction still requires validation in Premiere.
+
 ## Security and privacy
 
 - The API key is held in the panel's memory and is never persisted.
