@@ -9,11 +9,17 @@
     "lint": "eslint src",
     "test": "node --test",
     "demo": "node scripts/demo.mjs",
-    "demo:guard": "node scripts/guard-demo.mjs"
+    "demo:guard": "node scripts/guard-demo.mjs",
+    "demo:interval": "node scripts/invalid-interval-demo.mjs"
   },
-  "engines": { "node": ">=22" },
+  "engines": {
+    "node": ">=22"
+  },
   "license": "MIT",
-  "repository": { "type": "git", "url": "git+https://github.com/gbesse/jev-premiere-markers.git" },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gbesse/jev-premiere-markers.git"
+  },
   "devDependencies": {
     "@adobe/eslint-plugin-premierepro": "26.5.0",
     "@adobe/premierepro": "26.5.0",
