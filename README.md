@@ -38,3 +38,11 @@ MIT — see [LICENSE](LICENSE).
 ## Contrôle d’adoption · Adoption check · Comprobación de adopción
 
 [Français : essayer un cas synthétique](examples/adoption-check.md) · [English: try a synthetic case](examples/adoption-check.md) · [Español: pruebe un caso sintético](examples/adoption-check.md).
+
+## Reviewed sequence binding / Liaison à la séquence / Vínculo a secuencia
+
+EN: The panel captures project/sequence GUIDs before review and refuses to apply markers after switching either context. All marker intervals and fields are validated before host lookup/transaction. `getActiveSequenceIdentity` and the optional `expectedIdentity` application option expose this guard to integrations. Identity checks do not detect edits inside the same timeline or lock it during inference. Tests mock the installed Premiere SDK boundary; native Premiere/UXP loading and undo behavior remain host checks, with no live account or project changed here.
+
+FR : Le panneau capture les GUID projet/séquence avant revue et refuse les marqueurs si le contexte change. Tous les intervalles/champs sont validés avant accès ou transaction hôte. `getActiveSequenceIdentity` et l’option `expectedIdentity` exposent la garde aux intégrations. Elle ne détecte pas les modifications dans la même timeline et ne la verrouille pas pendant l’inférence. Les tests simulent la frontière du SDK installé ; chargement Premiere/UXP et annulation restent à vérifier dans l’hôte, sans compte ni projet réel modifié ici.
+
+ES: El panel captura GUID de proyecto/secuencia antes de revisar y rechaza aplicar marcadores si cambia contexto. Valida intervalos/campos antes de acceso/transacción del host. `getActiveSequenceIdentity` y opción `expectedIdentity` exponen la guarda. No detecta cambios dentro de la misma timeline ni la bloquea durante inferencia. Pruebas simulan la frontera del SDK instalado; carga Premiere/UXP y deshacer siguen siendo comprobaciones del host, sin modificar cuentas/proyectos reales.
