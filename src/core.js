@@ -82,8 +82,16 @@ export function validateResponse(response, questions) {
     const answer = response.answers[id];
     if (!answer || answer.type !== question.type) throw new TypeError(`Missing or mismatched answer: ${id}`);
     if (answer.type === 'noul' && (!Number.isFinite(answer.noul) || answer.noul < 0 || answer.noul > 1)) throw new TypeError(`Invalid noul: ${id}`);
-    if (answer.type === 'choice' && !(answer.choice in question.criteria)) throw new TypeError(`Invalid choice: ${id}`);
+    if (answer.type === 'choice' && !(Object.hasOwn(question.criteria, answer.choice))) throw new TypeError(`Invalid choice: ${id}`);
   }
   return response;
 }
 
+
+
+export function validateMarkerPlan(plan) {
+  const error = 'Plan de marqueurs invalide / Invalid marker plan / Plan de marcadores no válido';
+  if (!Array.isArray(plan) || plan.length > 255) throw new TypeError(error);
+  for (const marker of plan) if (!marker || !Number.isFinite(marker.start) || marker.start < 0 || !Number.isFinite(marker.duration) || marker.duration <= 0 || typeof marker.name !== 'string' || !marker.name || typeof marker.comments !== 'string' || marker.markerType !== 'Comment') throw new TypeError(error);
+  return plan;
+}

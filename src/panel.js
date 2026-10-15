@@ -2,17 +2,18 @@ import editorial from '../packs/editorial.json';
 import risk from '../packs/risk.json';
 import { parseSrt, buildDetectionRequest, issuesToLocate, buildLocationRequest, createMarkerPlan } from './core.js';
 import { callJev } from './client.js';
-import { addMarkersToActiveSequence } from './premiere.js';
+import { addMarkersToActiveSequence, getActiveSequenceIdentity } from './premiere.js';
 
 const packs = { editorial, risk };
-let markerPlan = [];
+let markerPlan = [], reviewIdentity = null;
 const byId = id => document.getElementById(id);
 const escapeHtml = value => value.replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]);
 
 async function review() {
   const status = byId('status');
   try {
-    byId('review').disabled = true; byId('apply').disabled = true; markerPlan = [];
+    byId('review').disabled = true; byId('apply').disabled = true; markerPlan = []; reviewIdentity = null;
+    reviewIdentity = await getActiveSequenceIdentity();
     const captions = parseSrt(byId('srt').value), pack = packs[byId('pack').value], apiKey = byId('key').value;
     status.textContent = `Checking ${captions.length} captions…`;
     const detection = await callJev(buildDetectionRequest(captions, pack), { apiKey });
@@ -35,7 +36,7 @@ async function review() {
 async function apply() {
   try {
     byId('apply').disabled = true;
-    const count = await addMarkersToActiveSequence(markerPlan);
+    const count = await addMarkersToActiveSequence(markerPlan, undefined, { expectedIdentity: reviewIdentity });
     byId('status').textContent = `${count} marker${count === 1 ? '' : 's'} added in one undoable transaction.`;
   } catch (error) { byId('status').textContent = error instanceof Error ? error.message : String(error); }
   finally { byId('apply').disabled = !markerPlan.length; }
