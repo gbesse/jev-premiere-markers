@@ -46,3 +46,12 @@ EN: The panel captures project/sequence GUIDs before review and refuses to apply
 FR : Le panneau capture les GUID projet/séquence avant revue et refuse les marqueurs si le contexte change. Tous les intervalles/champs sont validés avant accès ou transaction hôte. `getActiveSequenceIdentity` et l’option `expectedIdentity` exposent la garde aux intégrations. Elle ne détecte pas les modifications dans la même timeline et ne la verrouille pas pendant l’inférence. Les tests simulent la frontière du SDK installé ; chargement Premiere/UXP et annulation restent à vérifier dans l’hôte, sans compte ni projet réel modifié ici.
 
 ES: El panel captura GUID de proyecto/secuencia antes de revisar y rechaza aplicar marcadores si cambia contexto. Valida intervalos/campos antes de acceso/transacción del host. `getActiveSequenceIdentity` y opción `expectedIdentity` exponen la guarda. No detecta cambios dentro de la misma timeline ni la bloquea durante inferencia. Pruebas simulan la frontera del SDK instalado; carga Premiere/UXP y deshacer siguen siendo comprobaciones del host, sin modificar cuentas/proyectos reales.
+
+
+## 2026-11-05 — FR / EN / ES
+
+FR : `coalesceMarkerPlan(plan)` regroupe seulement les marqueurs de même captionId, début et durée. Conserve les marqueurs sources détachés et tous les libellés/commentaires distincts ; chevauchement seul ne suffit pas. Helper facultatif, aucun appel Premiere ou modification de séquence dans les tests.
+
+EN: `coalesceMarkerPlan(plan)` groups only markers with identical captionId, start and duration. Retains detached source markers and distinct labels/comments; overlap alone never merges. Optional helper, no Premiere call or sequence changes in tests.
+
+ES: `coalesceMarkerPlan(plan)` agrupa solo mismo captionId, inicio y duración. Conserva marcadores fuente separados y etiquetas/comentarios distintos; solapamiento no basta. Helper opcional, sin llamar Premiere ni modificar secuencias en pruebas.

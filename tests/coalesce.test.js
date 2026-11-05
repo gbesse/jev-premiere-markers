@@ -1,0 +1,3 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {coalesceMarkerPlan}from '../src/core.js';const a={start:1,duration:2,captionId:'c1',name:'Jev: A',comments:'source',markerType:'Comment'};
+test('same exact caption groups findings without losing sources',()=>{const b={...a,name:'Jev: B'};const x=coalesceMarkerPlan([a,b]);assert.equal(x.length,1);assert.equal(x[0].sourceMarkers.length,2);assert.equal(x[0].name,'Jev: A | Jev: B');x[0].sourceMarkers[0].name='changed';assert.equal(a.name,'Jev: A');});
+test('overlap alone never merges different captions',()=>assert.equal(coalesceMarkerPlan([a,{...a,start:2,captionId:'c2'}]).length,2));
