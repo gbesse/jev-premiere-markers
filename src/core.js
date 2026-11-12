@@ -108,6 +108,6 @@ export function clipMarkerPlan(plan, { start, end }) {
   if (!Number.isFinite(start) || start < 0 || !Number.isFinite(end) || end <= start) throw new TypeError('Intervalle invalide / Invalid interval / Intervalo no válido');
   return plan.flatMap(marker => {
     const left = Math.max(start, marker.start), right = Math.min(end, marker.start + marker.duration);
-    return right > left ? [{ ...JSON.parse(JSON.stringify(marker)), start: left, duration: right - left, sourceInterval: marker.sourceInterval ?? { start: marker.start, duration: marker.duration } }] : [];
+    return right > left ? [{ ...JSON.parse(JSON.stringify(marker)), start: left, duration: right - left, sourceInterval: marker.sourceInterval ? { ...marker.sourceInterval } : { start: marker.start, duration: marker.duration } }] : [];
   });
 }
