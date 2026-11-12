@@ -55,3 +55,12 @@ FR : `coalesceMarkerPlan(plan)` regroupe seulement les marqueurs de même captio
 EN: `coalesceMarkerPlan(plan)` groups only markers with identical captionId, start and duration. Retains detached source markers and distinct labels/comments; overlap alone never merges. Optional helper, no Premiere call or sequence changes in tests.
 
 ES: `coalesceMarkerPlan(plan)` agrupa solo mismo captionId, inicio y duración. Conserva marcadores fuente separados y etiquetas/comentarios distintos; solapamiento no basta. Helper opcional, sin llamar Premiere ni modificar secuencias en pruebas.
+
+
+## 2026-11-12 — FR / EN / ES
+
+FR : clipMarkerPlan découpe une sélection temporelle semi-ouverte en conservant les intervalles source et les textes. Aucune écriture timeline ; hôte Premiere non exécuté.
+
+EN: clipMarkerPlan clips a half-open time selection while retaining source intervals and user text. No timeline writes; Premiere host not executed.
+
+ES: clipMarkerPlan recorta una selección temporal semiabierta conservando intervalos fuente y textos. Sin escrituras de timeline; Premiere no ejecutado.
