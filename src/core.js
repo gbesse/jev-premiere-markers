@@ -92,7 +92,7 @@ export function validateResponse(response, questions) {
 export function validateMarkerPlan(plan) {
   const error = 'Plan de marqueurs invalide / Invalid marker plan / Plan de marcadores no válido';
   if (!Array.isArray(plan) || plan.length > 255) throw new TypeError(error);
-  for (const marker of plan) if (!marker || !Number.isFinite(marker.start) || marker.start < 0 || !Number.isFinite(marker.duration) || marker.duration <= 0 || typeof marker.name !== 'string' || !marker.name || typeof marker.comments !== 'string' || marker.markerType !== 'Comment') throw new TypeError(error);
+  for (const marker of plan) if (!marker || !Number.isFinite(marker.start) || marker.start < 0 || !Number.isFinite(marker.duration) || marker.duration <= 0 || !Number.isFinite(marker.start + marker.duration) || typeof marker.name !== 'string' || !marker.name || typeof marker.comments !== 'string' || marker.markerType !== 'Comment') throw new TypeError(error);
   return plan;
 }
 
@@ -101,4 +101,13 @@ export function coalesceMarkerPlan(plan){
  for(const marker of plan){const key=JSON.stringify([marker.start,marker.duration,marker.captionId??null]);const current=groups.get(key);
   if(!current)groups.set(key,{...JSON.parse(JSON.stringify(marker)),sourceMarkers:[JSON.parse(JSON.stringify(marker))]});else {current.sourceMarkers.push(JSON.parse(JSON.stringify(marker)));current.name=[...new Set(current.sourceMarkers.map(m=>m.name))].join(' | ');current.comments=[...new Set(current.sourceMarkers.map(m=>m.comments))].join('\n\n');}}
  return [...groups.values()];
+}
+
+export function clipMarkerPlan(plan, { start, end }) {
+  validateMarkerPlan(plan);
+  if (!Number.isFinite(start) || start < 0 || !Number.isFinite(end) || end <= start) throw new TypeError('Intervalle invalide / Invalid interval / Intervalo no válido');
+  return plan.flatMap(marker => {
+    const left = Math.max(start, marker.start), right = Math.min(end, marker.start + marker.duration);
+    return right > left ? [{ ...JSON.parse(JSON.stringify(marker)), start: left, duration: right - left, sourceInterval: marker.sourceInterval ? { ...marker.sourceInterval } : { start: marker.start, duration: marker.duration } }] : [];
+  });
 }
